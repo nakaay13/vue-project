@@ -2,16 +2,32 @@
 </script>
 
 <template>
- <div class="row g-0">
+ 
   <div class="hero-img col-12">
     <div class="text-hero col-3">
-        <p class="fs-1 text-end">VAPOR</p>
-        <p class="fs-6 text-end">We present new products of the highest quality that have never been on the market before. Enjoy new devices and flavors, but remember that you are risking your life :)</p>
+        <p class="fs-1 text-end">MATCHA</p>
+        <p class="fs-6 text-end">Discover the pure essence of tradition and wellness with our premium matcha tea. Sourced from the finest Japanese tea gardens, our matcha delivers rich flavor, vibrant color, and a boost of natural energy. Elevate your daily ritual with every sip of this antioxidant-packed superfood!</p>
+    </div>
+  </div>
+  <div class="about-container">
+    <div class="about">
+      <div class="about-text">
+        <h1>About us</h1>
+        <p> We’re passionate about delivering the finest matcha tea straight from Japan’s renowned tea gardens. Our journey began with a love for tradition and wellness, inspiring us to share the exceptional benefits of matcha with the world. We believe that matcha is not just a drink; it’s a holistic experience that fosters connection, mindfulness, and a deeper appreciation for nature’s bounty.
+        <br> <br>
+        The matcha tea ritual embodies this philosophy and invites you to slow down and embrace tranquility. Start by sifting the vibrant green matcha powder into a bowl, ensuring a smooth, lump-free base that captures the essence of quality. With a bamboo chasen, gently whisk the powder in a zig-zag motion, transforming it into a frothy, jade-colored elixir. As you take your first sip, allow yourself to savor the rich, umami flavor that dances on your palate, and feel the calming energy wash over you.
+        <br> <br>
+        This ancient practice is more than just a way to enjoy tea; it’s an opportunity for reflection and renewal. Each step of the ritual is designed to bring balance and focus to your day, creating a moment of peace in a busy world. At [Your Brand], we are committed to quality and sustainability, ensuring that every cup of our matcha nurtures both body and mind. Join us in celebrating the art of matcha and discover how it can enrich your daily life.</p>
+      </div>
+      <div class="about-img">
+        
       </div>
     </div>
   </div>
-  <div class="row light-blue light-blue-home g-0 d-flex justify-content-center align-items-center"> 
-    <div class="info-grey rounded-4 me-4 col-3 d-flex flex-column justify-content-center">
+  <div class="info-container">
+    <h1 class="info-text">Why should you trust us?</h1>
+  <div class="info-items"> 
+    <div class="info-item">
       <p class="fs-2 text-center">FREE SHIPPING</p>
       <div class="icon d-flex justify-content-center p-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
@@ -20,7 +36,7 @@
       </div>
       <p class="fs-6 mx-5 text-center">We offer free delivery, which is why our products are expensive.</p>
     </div>
-    <div class="info-grey rounded-4 me-4 col-3  d-flex flex-column justify-content-center">
+    <div class="info-item me-4 col-3  d-flex flex-column justify-content-center">
       <p class="fs-2 text-center">SATISFIED CUSTOMERS</p>
       <div class="icon d-flex justify-content-center p-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
@@ -31,7 +47,7 @@
       <p class="fs-6 mx-5 text-center">Our customers are satisfied
         (those who are not are either minors or dead).</p>
     </div>
-    <div class="info-grey rounded-4 col-3  d-flex flex-column justify-content-center">
+    <div class="info-item col-3  d-flex flex-column justify-content-center">
       <p class="fs-2 text-center">VARIOUS REWARDS</p>
       <div class="icon d-flex justify-content-center p-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
@@ -42,6 +58,8 @@
       <p class="fs-6 mx-5 text-center ">We have some cool awards, we won't say anything more.</p>
     </div>
   </div>
+  </div>
+  
 
 
   <footer class="d-flex flex-row justify-content-center align-items-center">

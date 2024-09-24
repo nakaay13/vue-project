@@ -6,11 +6,6 @@
   <header>
 
     <div class="row top g-0">
-      <p class="col-3 fs-4 ps-3 name">VAPOR</p>
-      <p class="fs-6 col text-end name py-2">Our products are intended only for adults.</p>
-    </div>
-    <div class="row g-0">
-    
       <ul class="nav fs-2 d-flex align-items-center">
         <li class="nav-item">
           <RouterLink to="/" class="nav-link">HOME</RouterLink>
@@ -84,6 +79,7 @@
         </div>
       </ul>
     </div>
+    
    
   </header>
 

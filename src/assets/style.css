@@ -13,12 +13,12 @@ header {
   }
   
   .hero-img {
-    background: url('../img/smoke.png') no-repeat center center;
+    background: url('../img/matcha-hero.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 700px;
+    height: 100vh;
     color: #DDE5F2;
     position: relative;
     z-index: 1; /* Keep hero image below header */
@@ -29,17 +29,22 @@ header {
     z-index: 100; /* Ensure the nav is above the hero */
   }
 
+li svg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
   
 
 
 .top{
-    height: 50px;
+    height: auto;
     width: 100%;
-    background-color: #63738C;
+    background-color: #306614;
 }
 
 .name{
-    color: #DDE5F2;
+    color: #fff;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 7px;
@@ -56,16 +61,74 @@ header {
     position: relative;
 }
 
-.light-blue{
-    width: 100%;
-    height: 550px;
-    background-color: #B1B7C2;
+.about-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px 0;
 }
+.about{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+}
+.about-text{
+    color: #306614;
+    font-weight: 400;
+    width: 50%;
+    margin-right: 100px;
+}
+.about-img {
+    width: 50%;
+    height: 500px;
+    background: url('../img/matcha-2.jpg') no-repeat center center; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    border-radius: 15px;
+}
+
+.info-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    width: 80%; 
+    margin-top: 20px;
+    background-color: #fff;
+}
+.info-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px 0;
+}
+.info-text{
+    color: #306614;
+    font-weight: 400;
+}
+
+.info-item {
+    background-color: #5C993D;
+    color: #131200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    padding: 15px;
+    border-radius: 15px;
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
 
 .text-hero{
     position: absolute;
-    right: 90px;
-    bottom: 70px;
+    right: 10%;
+    bottom: 10%;
 }
 
 .text-hero-vapes{
@@ -77,15 +140,18 @@ header {
 footer{
     width: 100%;
     height: 300px;
-    background-color: #63738C;
-    color: #DDE5F2;
+    background-color: #306614;
+    color: #96CC7A;
 }
 
-.info-grey{
-    height: 350px;
-    background-color: #646970;
-    color: #010101;
-}
+
+.info-item:first-child {
+    border-top-left-radius: 100px;
+  }
+  
+  .info-item:last-child {
+    border-bottom-right-radius: 100px;
+  }
 input, button, select, optgroup, textarea {
     margin: 0;
     font-family: inherit;
@@ -118,7 +184,7 @@ input, button, select, optgroup, textarea {
         height: 900px;
         
     }
-    .info-grey{
+    .info-item{
         margin: 15px 0px 15px 0 !important;
         width: 80%;
         height: 250px;
