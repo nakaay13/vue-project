@@ -34,7 +34,7 @@
           <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
         </svg>
       </div>
-      <p class="fs-6 mx-5 text-center">We offer free delivery, which is why our products are expensive.</p>
+      <p class="fs-6 mx-5 text-center">We believe that everyone should have access to premium matcha without added costs. That’s why we offer free shipping on all orders, ensuring you receive your favorite tea right at your doorstep without any extra fees. Enjoy the convenience of shopping from home, knowing you’ll always get the best value for your investment in wellness.</p>
     </div>
     <div class="info-item me-4 col-3  d-flex flex-column justify-content-center">
       <p class="fs-2 text-center">SATISFIED CUSTOMERS</p>
@@ -44,8 +44,7 @@
           <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
         </svg>
       </div>
-      <p class="fs-6 mx-5 text-center">Our customers are satisfied
-        (those who are not are either minors or dead).</p>
+      <p class="fs-6 mx-5 text-center">Our customers are our top priority, and we take pride in their satisfaction. With countless positive reviews and testimonials, our community speaks volumes about the quality of our matcha and the exceptional service we provide. Join the ranks of our delighted customers who have made the switch to our matcha and experience the difference for yourself!</p>
     </div>
     <div class="info-item col-3  d-flex flex-column justify-content-center">
       <p class="fs-2 text-center">VARIOUS REWARDS</p>
@@ -55,7 +54,7 @@
           <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
         </svg>
       </div>
-      <p class="fs-6 mx-5 text-center ">We have some cool awards, we won't say anything more.</p>
+      <p class="fs-6 mx-5 text-center ">We love to reward our loyal customers! With our various rewards program, you can earn points with every purchase, enjoy exclusive discounts, and access special promotions. It's our way of saying thank you for choosing us as your matcha provider. Experience the joy of shopping while reaping the benefits of your loyalty!</p>
     </div>
   </div>
   </div>
