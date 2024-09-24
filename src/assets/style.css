@@ -2,6 +2,36 @@
     box-sizing: border-box;
 }
 
+header {
+    position: absolute; /* Make the header overlay on top of the hero */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Ensure it stays above the hero image */
+    background: transparent; /* Make sure the header background is transparent */
+    color: #DDE5F2; /* Adjust text color to stand out over the image */
+  }
+  
+  .hero-img {
+    background: url('../img/smoke.png') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 700px;
+    color: #DDE5F2;
+    position: relative;
+    z-index: 1; /* Keep hero image below header */
+  }
+  
+  ul.nav {
+    background: transparent !important; /* Make sure nav list is also transparent */
+    z-index: 100; /* Ensure the nav is above the hero */
+  }
+
+  
+
+
 .top{
     height: 50px;
     width: 100%;
@@ -13,18 +43,6 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 7px;
-}
-
-
-.hero-img {
-    background: url('../img/smoke.png') no-repeat center center; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 700px;
-    color: #DDE5F2;
-    position: relative;
 }
 
 .hero-img-vapes {

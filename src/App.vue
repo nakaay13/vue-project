@@ -13,10 +13,10 @@
     
       <ul class="nav fs-2 d-flex align-items-center">
         <li class="nav-item">
-          <RouterLink to="/">HOME</RouterLink>
+          <RouterLink to="/" class="nav-link">HOME</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/about">PRODUCTS</RouterLink>
+          <RouterLink to="/about" class="nav-link">PRODUCTS</RouterLink>
         </li>
         <li class="col"></li>
         <li type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
