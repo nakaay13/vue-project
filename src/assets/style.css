@@ -159,6 +159,25 @@ input, button, select, optgroup, textarea {
     line-height: inherit;
 }
 
+.products{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px ;
+
+}
+.card{
+    margin-bottom: 30px;
+}
+.products-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .offcanvas, .offcanvas-xxl, .offcanvas-xl, .offcanvas-lg, .offcanvas-md, .offcanvas-sm {
     --bs-offcanvas-zindex: 1045;
     --bs-offcanvas-width: 400px;
