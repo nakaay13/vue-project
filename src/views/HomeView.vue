@@ -1,5 +1,6 @@
 <script setup>
-import '../components/Footer.vue'
+
+
 </script>
 
 <template>
@@ -59,7 +60,7 @@ import '../components/Footer.vue'
     </div>
   </div>
   </div>
-</Footer>
+
 
 
   
