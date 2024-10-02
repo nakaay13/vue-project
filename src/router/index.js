@@ -19,11 +19,12 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/product/:id',  // Dynamic route for the product card
+      path: '/product/:id',
       name: 'CardView',
       component: CardView,
-      props: true,  // Pass route params as props to CardView
-    },
+      props: true,
+    }
+    
   ]
 })
 

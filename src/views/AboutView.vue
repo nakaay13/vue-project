@@ -31,28 +31,17 @@
 </style>
 
 <script>
-import { db } from '../modules/firebase'; 
-import { collection, getDocs } from 'firebase/firestore';
-import { RouterLink } from 'vue-router';
-
+import { fetchProducts } from '../modules/products';
 export default {
   data() {
     return {
-      products: [] // Initialize an empty array to hold the product data
+      products: [],
     };
   },
   async created() {
-    try {
-      const querySnapshot = await getDocs(collection(db, 'products'));
-      // Map the documents to an array, including the Firestore document ID
-      this.products = querySnapshot.docs.map(doc => ({
-        id: doc.id, // Get the Firestore document ID
-        ...doc.data() // Get the document fields
-      }));
-      console.log("Fetched products:", this.products);
-    } catch (error) {
-      console.error("Error fetching products: ", error);
-    }
+    this.products = await fetchProducts(); // Fetch products when the component is created
+    console.log("Fetched products:", this.products);
   }
 };
 </script>
+
