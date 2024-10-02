@@ -165,6 +165,20 @@ input, button, select, optgroup, textarea {
 }
 .card{
     margin-bottom: 30px;
+    height: 400px;
+}
+
+
+.card-img-top{
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .products-container{
     display: flex;

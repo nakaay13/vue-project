@@ -20,7 +20,7 @@ const router = createRouter({
     },
     {
       path: '/product/:id',  // Dynamic route for the product card
-      name: 'ProductCard',
+      name: 'CardView',
       component: CardView,
       props: true,  // Pass route params as props to CardView
     },

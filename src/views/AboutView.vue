@@ -9,6 +9,7 @@
   <div class="products-container">
     <div class="products"> 
       <div v-for="product in products" :key="product.id">
+        <RouterLink :to="{ name: 'CardView', params: { id: product.id } }" class="router-link">
         <div class="card last-card text-primary bg-secondary rounded-4 text-center" style="width: 17rem;">
             <img :src="product.image" class="card-img-top rounded-top-4" alt="...">
             <div class="card-body">
@@ -16,15 +17,23 @@
               <p class="card-text">{{ product.price }} DKK</p>
             </div>
         </div>
+        </RouterLink>
     </div>
   </div>
 
   </div>
 </template>
 
+<style scoped>
+.router-link {
+  text-decoration: none;
+}
+</style>
+
 <script>
-import { db } from '../modules/firebase'; // Adjust the path as necessary
+import { db } from '../modules/firebase'; 
 import { collection, getDocs } from 'firebase/firestore';
+import { RouterLink } from 'vue-router';
 
 export default {
   data() {
