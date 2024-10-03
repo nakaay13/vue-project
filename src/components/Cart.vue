@@ -7,11 +7,13 @@
         <ul>
           <li v-for="item in cart" :key="item.product.id" class="cart-item">
             <img :src="item.product.image" alt="Product Image" />
-            <div>
-              <p>{{ item.product.name }}</p>
+            <div class="in-cart">
+              <h3>{{ item.product.name }}</h3>
               <p>{{ item.product.price }} DKK</p>
-              <p>Quantity: {{ item.quantity }}</p>
-              <input type="number" v-model="item.quantity" min="1" @change="updateCart(item.product.id, item.quantity)" />
+              <div class="quantity">
+                <p>Quantity:</p>
+                <input type="number" v-model="item.quantity" min="1" @change="updateCart(item.product.id, item.quantity)" />
+              </div>
               <button @click="removeFromCart(item.product.id)">Remove</button>
             </div>
           </li>
@@ -44,16 +46,51 @@
   
   <style scoped>
   .cart-container {
-    padding: 20px;
+    font-size: 24px;
   }
   .cart-item {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
   .cart-item img {
     width: 100px;
     height: 100px;
     margin-right: 20px;
+    object-fit: cover;
   }
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 10px;
+    
+  }
+
+  input{
+    width: 50%;
+    padding: 12px 20px;
+    margin-left: 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    box-sizing: border-box;
+    
+  }
+
+  button{
+    background-color: #306614;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 30px;
+}
+
+p{
+    padding: 0;
+    margin: 0;
+}
   </style>
   
