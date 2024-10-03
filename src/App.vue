@@ -45,17 +45,24 @@
             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
           </svg>
         </li>
-        <div class="offcanvas offcanvas-end bg-danger" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel">
-          <div class="offcanvas-header">
-            <h3 class="offcanvas-title" id="offcanvasRightLabel">CART</h3>
-            <div class="col"></div>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <!-- <h3 class="text-center">CART</h3> -->
-            <Cart :cart="cartItems" @update-cart="updateCart" @remove-from-cart="removeFromCart" />
-          </div>
+        <div 
+        class="offcanvas offcanvas-end bg-danger" 
+        tabindex="-1" 
+        id="offcanvasRight1" 
+        aria-labelledby="offcanvasRightLabel" 
+        :class="{ show: showCart }" 
+        style="visibility: showCart ? 'visible' : 'hidden';"
+      >
+        <div class="offcanvas-header">
+          <h3 class="offcanvas-title" id="offcanvasRightLabel">CART</h3>
+          <div class="col"></div>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="showCart = false"></button>
         </div>
+        <div class="offcanvas-body">
+          <Cart :cart="cartItems" @update-cart="updateCart" @remove-from-cart="removeFromCart" />
+        </div>
+      </div>
+
         <li class="me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -88,11 +95,14 @@
 import Footer from './components/Footer.vue';
 import Cart from './components/Cart.vue';
 
+
+
 export default {
   components: { Footer, Cart },
   data() {
     return {
       cartItems: [], // to hold the cart items
+      showCart: false, // to control the cart visibility
     };
   },
   methods: {
@@ -103,6 +113,8 @@ export default {
       } else {
         this.cartItems.push({ product, quantity });
       }
+       // Open the cart when an item is added
+      this.showCart = true;
     },
     updateCart({ productId, quantity }) {
       const item = this.cartItems.find(item => item.product.id === productId);
