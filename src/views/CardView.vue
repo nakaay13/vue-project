@@ -10,8 +10,8 @@
                 <p>{{ product.description }}</p>
                 <h4>{{ product.price }} DKK</h4>
                 <div class="input-cart">
-                    <input type="number" id="quantity" class="quantity-input" value="1" min="1" />
-                    <button>Add to card</button>
+                  <input type="number" id="quantity" v-model.number="quantity" class="quantity-input" min="1" />
+                  <button @click="addToCart">Add to Cart</button>
                 </div>
                 
             </div>
@@ -85,6 +85,7 @@ button{
       return {
         product: null, // Initialize product as null
         products: [], // Initialize an empty array for all products
+        quantity: 1, // Initialize the quantity as 1
       };
     },
     async created() {
@@ -93,7 +94,12 @@ button{
       
       // Find the specific product by ID
       this.product = this.products.find(product => product.id === this.id);
-    }
+    },
+    methods: {
+      addToCart() {
+        this.$emit('add-to-cart', this.product, this.quantity);
+      },
+    },
   };
   </script>
   

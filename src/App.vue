@@ -1,7 +1,3 @@
-<script setup>
-import Footer from  './components/Footer.vue'
-</script>
-
 <template>
   <header>
 
@@ -57,7 +53,7 @@ import Footer from  './components/Footer.vue'
           </div>
           <div class="offcanvas-body">
             <!-- <h3 class="text-center">CART</h3> -->
-            <h6 class="text-center">Your cart is empty.</h6>
+            <Cart :cart="cartItems" @update-cart="updateCart" @remove-from-cart="removeFromCart" />
           </div>
         </div>
         <li class="me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
@@ -83,8 +79,40 @@ import Footer from  './components/Footer.vue'
    
   </header>
 
-  <RouterView />
+  <RouterView @add-to-cart="addToCart" />
   <Footer />
 </template>
 
 
+<script>
+import Footer from './components/Footer.vue';
+import Cart from './components/Cart.vue';
+
+export default {
+  components: { Footer, Cart },
+  data() {
+    return {
+      cartItems: [], // to hold the cart items
+    };
+  },
+  methods: {
+    addToCart(product, quantity) {
+      const existingItem = this.cartItems.find(item => item.product.id === product.id);
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        this.cartItems.push({ product, quantity });
+      }
+    },
+    updateCart({ productId, quantity }) {
+      const item = this.cartItems.find(item => item.product.id === productId);
+      if (item) {
+        item.quantity = quantity;
+      }
+    },
+    removeFromCart(productId) {
+      this.cartItems = this.cartItems.filter(item => item.product.id !== productId);
+    },
+  },
+};
+</script>
