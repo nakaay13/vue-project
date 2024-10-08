@@ -15,22 +15,9 @@
         </div>
       </div>
     </div>
-    <div class="edit">
-      <button @click="deleteProduct">Delete</button>
-      <button @click="isEditing ? saveProduct() : editProduct()">
-        {{ isEditing ? 'Save' : 'Edit' }}
-      </button>
-      
-    </div>
-    <!-- Editable Fields appear here -->
-    <div v-if="isEditing" class="edit-mode">
-      <h3>Edit Product Details:</h3>
-      <input v-model="product.name" placeholder="Product Name" />
-      <input v-model.number="product.weight" placeholder="Weight (g)" />
-      <textarea v-model="product.description" placeholder="Description"></textarea>
-      <input v-model.number="product.price" placeholder="Price (DKK)" />
-      <input v-model="product.image" placeholder="Image URL" />
-    </div>
+    
+    <EditProduct :product="product" :onUpdate="fetchProduct" />
+
   </div>
   <div v-else>
     <p>Loading product details...</p>
@@ -72,7 +59,7 @@ button {
   border-radius: 30px;
   margin-left: 20px;
 }
-input, textarea {
+input {
   width: 20%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -102,44 +89,31 @@ input, textarea {
 </style>
 
 <script>
-import { fetchProducts, updateProduct, deleteProduct } from '../modules/products'; // Ensure you import these functions
+import { fetchProducts } from '../modules/products';
+import EditProduct from '../components/EditProduct.vue'; // Import the new component
 
 export default {
   props: ['id'], // Accept the product ID as a prop from the route
+  components: {
+    EditProduct,
+  },
   data() {
     return {
       product: null,
       products: [],
       quantity: 1,
-      isEditing: false, // Track whether we are in edit mode
     };
   },
   async created() {
-    this.products = await fetchProducts();
-    this.product = this.products.find(product => product.id === this.id);
+    await this.fetchProduct(); // Fetch the product details
   },
   methods: {
+    async fetchProduct() {
+      this.products = await fetchProducts();
+      this.product = this.products.find(product => product.id === this.id);
+    },
     addToCart() {
       this.$emit('add-to-cart', this.product, this.quantity);
-    },
-    async saveProduct() {
-      await updateProduct(this.product.id, {
-        name: this.product.name,
-        weight: this.product.weight,
-        description: this.product.description,
-        price: this.product.price,
-        image: this.product.image,
-      });
-      this.isEditing = false; // Exit edit mode after saving
-      alert('Product updated successfully!');
-    },
-    async deleteProduct() {
-      await deleteProduct(this.product.id);
-      alert('Product deleted successfully!');
-      this.$router.push('/about'); // Redirect to the products list after deletion
-    },
-    editProduct() {
-      this.isEditing = !this.isEditing; // Toggle edit mode
     },
   },
 };
