@@ -66,7 +66,7 @@ button{
     margin-left: 20px;
 }
 .quantity-input{
-    width: 10%;
+    width: 20%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
