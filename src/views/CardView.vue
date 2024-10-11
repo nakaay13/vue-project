@@ -24,28 +24,43 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { fetchProducts } from '../modules/products';
+<script setup>
+import { ref, watch, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useProducts } from '../modules/useProducts'; // Import your composable
 import EditProduct from '../components/EditProduct.vue';
+import { useCart } from '../modules/useCart'; // Import the useCart composable
 
-const product = ref(null);
-const quantity = ref(1);
+// Initialize composables
+const { products, fetchProducts } = useProducts();
+const { addToCart: addToCartMethod } = useCart(); // Destructure addToCart from useCart
 const route = useRoute();
-const router = useRouter();
+const quantity = ref(1);
+const product = ref(null);
 
-async function fetchProduct() {
-  const products = await fetchProducts();
-  product.value = products.find(p => p.id === route.params.id);
-}
+// Fetch product on mount
+const fetchProduct = async () => {
+  await fetchProducts(); // Ensure products are fetched
+  // Find the product by ID
+  product.value = products.value.find(p => p.id === route.params.id);
+};
 
-fetchProduct();
+// Watch for changes in products to update product details
+watch(products, () => {
+  product.value = products.value.find(p => p.id === route.params.id);
+});
 
-function addToCart() {
-  // Emit an add-to-cart event
-}
+// Fetch the product when the component mounts
+onMounted(fetchProduct);
+
+// Add to cart function
+const addToCart = () => {
+  if (product.value) {
+    addToCartMethod(product.value, quantity.value); // Call the method from useCart
+  }
+};
 </script>
+
 
 <style scoped>
 .details-container {

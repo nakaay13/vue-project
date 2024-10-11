@@ -70,5 +70,6 @@ export const useProducts = () => {
     addProduct,
     updateProduct,
     deleteProduct,
+    fetchProducts,
   };
 };

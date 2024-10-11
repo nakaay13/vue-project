@@ -15,29 +15,16 @@
 /* Add any necessary styles here */
 </style>
 
-<script>
-import { fetchProducts } from '../modules/products';
+<script setup>
+import { onMounted } from 'vue';
+import { useProducts } from '../modules/useProducts'; // Import the composable
 import ProductList from '../components/ProductList.vue';
 import AddProductForm from '../components/AddProductForm.vue';
 
-export default {
-  components: {
-    ProductList,
-    AddProductForm,
-  },
-  data() {
-    return {
-      products: [],
-    };
-  },
-  async created() {
-    await this.fetchProducts();
-  },
-  methods: {
-    async fetchProducts() {
-      this.products = await fetchProducts(); // Fetch products when the component is created
-      console.log("Fetched products:", this.products);
-    },
-  },
-};
+const { products, fetchProducts } = useProducts(); // Destructure the products and fetch function
+
+// Fetch products when the component is mounted
+onMounted(() => {
+  fetchProducts();
+});
 </script>

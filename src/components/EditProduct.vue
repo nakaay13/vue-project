@@ -62,46 +62,46 @@
   </style>
   
   <script setup>
-  import { ref, watch } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { updateProduct, deleteProduct } from '../modules/products';
-  
-  // Accept props and emit events
-  const props = defineProps(['product']);
-  const emit = defineEmits(['update']);
-  const router = useRouter();
-  
-  const isEditing = ref(false);
-  const editedProduct = ref({ ...props.product });
-  
-  // Watch for changes in `product` prop and update `editedProduct`
-  watch(() => props.product, (newProduct) => {
-    editedProduct.value = { ...newProduct };
-  });
-  
-  function toggleEditMode() {
-    isEditing.value = !isEditing.value;
+import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useProducts } from '../modules/useProducts'; // Import the useProducts composable
+
+// Accept props and emit events
+const props = defineProps(['product']);
+const emit = defineEmits(['update']);
+const router = useRouter();
+const { updateProduct, deleteProduct: deleteProductFromDB } = useProducts(); // Destructure the functions from useProducts
+
+const isEditing = ref(false);
+const editedProduct = ref({ ...props.product });
+
+// Watch for changes in `product` prop and update `editedProduct`
+watch(() => props.product, (newProduct) => {
+  editedProduct.value = { ...newProduct };
+});
+
+function toggleEditMode() {
+  isEditing.value = !isEditing.value;
+}
+
+async function saveProduct() {
+  try {
+    await updateProduct(editedProduct.value.id, editedProduct.value);
+    isEditing.value = false;
+    emit('update'); // Notify parent to refresh data
+    alert('Product updated successfully!');
+  } catch (error) {
+    console.error('Error saving product:', error);
   }
-  
-  async function saveProduct() {
-    try {
-      await updateProduct(editedProduct.value.id, editedProduct.value);
-      isEditing.value = false;
-      emit('update'); // Notify parent to refresh data
-      alert('Product updated successfully!');
-    } catch (error) {
-      console.error('Error saving product:', error);
-    }
+}
+
+async function deleteProduct() {
+  try {
+    await deleteProductFromDB(editedProduct.value.id); // Call the delete function from useProducts
+    alert('Product deleted successfully!');
+    router.push('/about'); // Redirect after deletion
+  } catch (error) {
+    console.error('Error deleting product:', error);
   }
-  
-  async function deleteProduct() {
-    try {
-      await deleteProduct(editedProduct.value.id);
-      alert('Product deleted successfully!');
-      router.push('/about'); // Redirect after deletion
-    } catch (error) {
-      console.error('Error deleting product:', error);
-    }
-  }
-  </script>
-  
+}
+</script>

@@ -45,7 +45,7 @@
   }
   </style>
   
-  <script>
+  <script setup>
     import { useProducts } from '../modules/useProducts';
     // Use the composable to access products functionality
     const { addProduct, newProduct } = useProducts();

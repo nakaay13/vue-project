@@ -23,16 +23,15 @@
   }
   </style>
   
-  <script>
-  import { fetchProducts } from '../modules/products';
+  <script setup>
+  import { defineProps } from 'vue';
   
-  export default {
-    props: {
-      products: {
-        type: Array,
-        required: true,
-      },
+  // Accept products as a prop
+  const props = defineProps({
+    products: {
+      type: Array,
+      required: true,
     },
-  };
+  });
   </script>
   
