@@ -23,27 +23,32 @@
     </div>
   </template>
   
-  <script>
-  export default {
-    props: {
-      cart: Array,
-    },
-    computed: {
-      cartTotal() {
-        return this.cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
-      },
-    },
-    methods: {
-      updateCart(productId, quantity) {
-        this.$emit('update-cart', { productId, quantity });
-      },
-      removeFromCart(productId) {
-        this.$emit('remove-from-cart', productId);
-      },
-    },
+  <script setup>
+  import { computed } from 'vue';
+  
+  // Props to receive cart data
+  defineProps({
+    cart: Array,
+  });
+  
+  // Computed property for total cart amount
+  const cartTotal = computed(() => {
+    return props.cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  });
+  
+  // Emit events to parent
+  const emit = defineEmits(['update-cart', 'remove-from-cart']);
+  
+  // Function to update cart quantity
+  const updateCart = (productId, quantity) => {
+    emit('update-cart', { productId, quantity });
+  };
+  
+  // Function to remove item from cart
+  const removeFromCart = (productId) => {
+    emit('remove-from-cart', productId);
   };
   </script>
-  
   <style scoped>
   .cart-container {
     font-size: 24px;

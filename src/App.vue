@@ -94,37 +94,20 @@
 <script>
 import Footer from './components/Footer.vue';
 import Cart from './components/Cart.vue';
-
-
+import { useCart } from './modules/useCart'; // Import the useCart composable
 
 export default {
   components: { Footer, Cart },
-  data() {
+  setup() {
+    const { cartItems, showCart, addToCart, updateCart, removeFromCart } = useCart(); // Use the composable
+
     return {
-      cartItems: [], // to hold the cart items
-      showCart: false, // to control the cart visibility
+      cartItems,
+      showCart,
+      addToCart,
+      updateCart,
+      removeFromCart,
     };
-  },
-  methods: {
-    addToCart(product, quantity) {
-      const existingItem = this.cartItems.find(item => item.product.id === product.id);
-      if (existingItem) {
-        existingItem.quantity += quantity;
-      } else {
-        this.cartItems.push({ product, quantity });
-      }
-       // Open the cart when an item is added
-      this.showCart = true;
-    },
-    updateCart({ productId, quantity }) {
-      const item = this.cartItems.find(item => item.product.id === productId);
-      if (item) {
-        item.quantity = quantity;
-      }
-    },
-    removeFromCart(productId) {
-      this.cartItems = this.cartItems.filter(item => item.product.id !== productId);
-    },
   },
 };
 </script>

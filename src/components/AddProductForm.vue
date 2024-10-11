@@ -46,34 +46,8 @@
   </style>
   
   <script>
-  import { addProduct } from '../modules/products';
-  
-  export default {
-    data() {
-      return {
-        newProduct: {
-          name: '',
-          price: null,
-          image: '',
-          weight: null,
-        },
-      };
-    },
-    methods: {
-      async addProduct() {
-        await addProduct(this.newProduct);
-        this.$emit('product-added'); // Emit an event to notify parent about the new product
-        this.resetForm(); // Reset form fields
-      },
-      resetForm() {
-        this.newProduct = {
-          name: '',
-          price: null,
-          image: '',
-          weight: null,
-        };
-      },
-    },
-  };
+    import { useProducts } from '../modules/useProducts';
+    // Use the composable to access products functionality
+    const { addProduct, newProduct } = useProducts();
   </script>
   
