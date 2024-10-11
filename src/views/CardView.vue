@@ -24,6 +24,29 @@
   </div>
 </template>
 
+<script>
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { fetchProducts } from '../modules/products';
+import EditProduct from '../components/EditProduct.vue';
+
+const product = ref(null);
+const quantity = ref(1);
+const route = useRoute();
+const router = useRouter();
+
+async function fetchProduct() {
+  const products = await fetchProducts();
+  product.value = products.find(p => p.id === route.params.id);
+}
+
+fetchProduct();
+
+function addToCart() {
+  // Emit an add-to-cart event
+}
+</script>
+
 <style scoped>
 .details-container {
   display: flex;
@@ -88,33 +111,4 @@ input {
 }
 </style>
 
-<script>
-import { fetchProducts } from '../modules/products';
-import EditProduct from '../components/EditProduct.vue'; // Import the new component
 
-export default {
-  props: ['id'], // Accept the product ID as a prop from the route
-  components: {
-    EditProduct,
-  },
-  data() {
-    return {
-      product: null,
-      products: [],
-      quantity: 1,
-    };
-  },
-  async created() {
-    await this.fetchProduct(); // Fetch the product details
-  },
-  methods: {
-    async fetchProduct() {
-      this.products = await fetchProducts();
-      this.product = this.products.find(product => product.id === this.id);
-    },
-    addToCart() {
-      this.$emit('add-to-cart', this.product, this.quantity);
-    },
-  },
-};
-</script>

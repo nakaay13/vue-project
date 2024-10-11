@@ -1,4 +1,3 @@
-<!-- src/components/EditProduct.vue -->
 <template>
     <div v-if="product">
       <div class="edit">
@@ -62,47 +61,47 @@
 }
   </style>
   
-  <script>
+  <script setup>
+  import { ref, watch } from 'vue';
+  import { useRouter } from 'vue-router';
   import { updateProduct, deleteProduct } from '../modules/products';
   
-  export default {
-    props: {
-      product: {
-        type: Object,
-        required: true,
-      },
-      onUpdate: {
-        type: Function,
-        required: true,
-      },
-    },
-    data() {
-      return {
-        isEditing: false, // Track whether we are in edit mode
-      };
-    },
-    methods: {
-      toggleEditMode() {
-        this.isEditing = !this.isEditing; // Toggle edit mode
-      },
-      async saveProduct() {
-        await updateProduct(this.product.id, {
-          name: this.product.name,
-          weight: this.product.weight,
-          description: this.product.description,
-          price: this.product.price,
-          image: this.product.image,
-        });
-        this.isEditing = false; // Exit edit mode after saving
-        this.onUpdate(); // Call the parent update function to refresh the data
-        alert('Product updated successfully!');
-      },
-      async deleteProduct() {
-        await deleteProduct(this.product.id);
-        alert('Product deleted successfully!');
-        this.$router.push('/about'); // Redirect to the products list after deletion
-      },
-    },
-  };
+  // Accept props and emit events
+  const props = defineProps(['product']);
+  const emit = defineEmits(['update']);
+  const router = useRouter();
+  
+  const isEditing = ref(false);
+  const editedProduct = ref({ ...props.product });
+  
+  // Watch for changes in `product` prop and update `editedProduct`
+  watch(() => props.product, (newProduct) => {
+    editedProduct.value = { ...newProduct };
+  });
+  
+  function toggleEditMode() {
+    isEditing.value = !isEditing.value;
+  }
+  
+  async function saveProduct() {
+    try {
+      await updateProduct(editedProduct.value.id, editedProduct.value);
+      isEditing.value = false;
+      emit('update'); // Notify parent to refresh data
+      alert('Product updated successfully!');
+    } catch (error) {
+      console.error('Error saving product:', error);
+    }
+  }
+  
+  async function deleteProduct() {
+    try {
+      await deleteProduct(editedProduct.value.id);
+      alert('Product deleted successfully!');
+      router.push('/about'); // Redirect after deletion
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+  }
   </script>
   

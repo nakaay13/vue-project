@@ -51,7 +51,7 @@
         id="offcanvasRight1" 
         aria-labelledby="offcanvasRightLabel" 
         :class="{ show: showCart }" 
-        style="visibility: showCart ? 'visible' : 'hidden';"
+        :style="{ visibility: showCart ? 'visible' : 'hidden' }"
       >
         <div class="offcanvas-header">
           <h3 class="offcanvas-title" id="offcanvasRightLabel">CART</h3>

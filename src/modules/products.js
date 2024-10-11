@@ -1,4 +1,4 @@
-// src/modules/productService.js
+// src/modules/products.js
 import { db } from './firebase'; // Import your Firestore database instance
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
