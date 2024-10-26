@@ -29,12 +29,20 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useCart } from '../modules/useCart'; // Ensure correct path
 
-// Destructure properties and methods from useCart
-const { cartItems, updateCart, removeFromCart } = useCart(); 
 
+import { defineProps, computed } from 'vue';
+
+const props = defineProps({
+  cart: {
+    type: Array,
+    required: true
+  }
+});
+
+// Use props.cart to access cart items
+const cartItems = props.cart;
+console.log('Cart props:', props.cart);
 // Computed property for total cart amount
 const cartTotal = computed(() => {
   return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);

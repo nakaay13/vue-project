@@ -67,7 +67,6 @@
 
 <script>
 import { Offcanvas } from 'bootstrap';
-
 import Footer from './components/Footer.vue';
 import Cart from './components/Cart.vue';
 import { useCart } from './modules/useCart'; // Import the useCart composable
@@ -77,28 +76,28 @@ export default {
   setup() {
     const { cartItems, showCart, addToCart, updateCart, removeFromCart } = useCart(); // Use the composable
 
-    // Method to handle adding to cart and opening the cart view
-    
+    // Define toggleBootstrapOffcanvas inside setup
+    const toggleBootstrapOffcanvas = (id) => {
+      const offcanvasElement = document.getElementById(id);
+      const offcanvas = new Offcanvas(offcanvasElement); // Use the imported Offcanvas class
+      showCart.value ? offcanvas.show() : offcanvas.hide();
+    };
+
+    // Method to handle adding to cart
     const handleAddToCart = (product, quantity) => {
       try {
         addToCart(product, quantity);
-        showCart.value = true; // Show cart on add
-        toggleBootstrapOffcanvas('offcanvasRight1');
+        // showCart.value = true; // Removed this line
+        toggleBootstrapOffcanvas('offcanvasRight1'); // Use this for opening the cart
       } catch (error) {
         console.error("Error adding to cart:", error);
       }
     };
 
     const toggleCart = () => {
-      showCart.value = !showCart.value;
-      toggleBootstrapOffcanvas('offcanvasRight1');
+      showCart.value = !showCart.value; // Toggling the showCart variable
+      toggleBootstrapOffcanvas('offcanvasRight1'); // Ensure this is correctly defined
     };
-
-    const toggleBootstrapOffcanvas = (id) => {
-  const offcanvasElement = document.getElementById(id);
-  const offcanvas = new Offcanvas(offcanvasElement); // Use the imported Offcanvas class
-  showCart.value ? offcanvas.show() : offcanvas.hide();
-};
 
     return {
       cartItems,
@@ -108,7 +107,9 @@ export default {
       removeFromCart,
       toggleCart,
       handleAddToCart,
+      toggleBootstrapOffcanvas, // Ensure this is returned
     };
   },
 };
 </script>
+

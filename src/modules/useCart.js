@@ -13,9 +13,6 @@ export const useCart = () => {
       cartItems.value.push({ product, quantity });
     }
     console.log('Cart items:', JSON.stringify(cartItems.value, null, 2));
-
-    // Open the cart when an item is added
-    //showCart.value = true;
   };
 
   const updateCart = ({ productId, quantity }) => {
@@ -28,8 +25,6 @@ export const useCart = () => {
   const removeFromCart = (productId) => {
     cartItems.value = cartItems.value.filter(item => item.product.id !== productId);
   };
-  
-  
 
   return {
     cartItems,
