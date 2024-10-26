@@ -40,58 +40,34 @@
             </form>
           </div>
         </div>
-        <li class="mx-3"  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" >
+        <li class="mx-3"  type="button" @click="toggleCart">
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
           </svg>
         </li>
-        <div 
-        class="offcanvas offcanvas-end bg-danger" 
-        tabindex="-1" 
-        id="offcanvasRight1" 
-        aria-labelledby="offcanvasRightLabel" 
-        :class="{ show: showCart }" 
-        :style="{ visibility: showCart ? 'visible' : 'hidden' }"
-      >
-        <div class="offcanvas-header">
-          <h3 class="offcanvas-title" id="offcanvasRightLabel">CART</h3>
-          <div class="col"></div>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="showCart = false"></button>
-        </div>
-        <div class="offcanvas-body">
-          <Cart :cart="cartItems" @update-cart="updateCart" @remove-from-cart="removeFromCart" />
-        </div>
-      </div>
-
-        <li class="me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-          </svg>
-        </li>
-        <div class="offcanvas offcanvas-top bg-danger" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+         <!-- Cart Offcanvas -->
+         <div class="offcanvas offcanvas-end bg-danger" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" v-show="showCart">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasTopLabel">Search</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h3 class="offcanvas-title" id="offcanvasRightLabel">CART</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="toggleCart"></button>
           </div>
           <div class="offcanvas-body">
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-dark" type="submit">Search</button>
-            </form>
+            <Cart :cart="cartItems" @update-cart="updateCart" @remove-from-cart="removeFromCart" />
           </div>
         </div>
       </ul>
     </div>
-    
-   
   </header>
 
-  <RouterView @add-to-cart="addToCart" />
+
+  <RouterView @add-to-cart="handleAddToCart" />
   <Footer />
 </template>
 
 
 <script>
+import { Offcanvas } from 'bootstrap';
+
 import Footer from './components/Footer.vue';
 import Cart from './components/Cart.vue';
 import { useCart } from './modules/useCart'; // Import the useCart composable
@@ -101,10 +77,28 @@ export default {
   setup() {
     const { cartItems, showCart, addToCart, updateCart, removeFromCart } = useCart(); // Use the composable
 
+    // Method to handle adding to cart and opening the cart view
+    
+    const handleAddToCart = (product, quantity) => {
+      try {
+        addToCart(product, quantity);
+        showCart.value = true; // Show cart on add
+        toggleBootstrapOffcanvas('offcanvasRight1');
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+      }
+    };
 
     const toggleCart = () => {
-      showCart.value = !showCart.value; // Toggle the cart visibility
+      showCart.value = !showCart.value;
+      toggleBootstrapOffcanvas('offcanvasRight1');
     };
+
+    const toggleBootstrapOffcanvas = (id) => {
+  const offcanvasElement = document.getElementById(id);
+  const offcanvas = new Offcanvas(offcanvasElement); // Use the imported Offcanvas class
+  showCart.value ? offcanvas.show() : offcanvas.hide();
+};
 
     return {
       cartItems,
@@ -113,6 +107,7 @@ export default {
       updateCart,
       removeFromCart,
       toggleCart,
+      handleAddToCart,
     };
   },
 };

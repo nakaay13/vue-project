@@ -17,7 +17,6 @@
     </div>
     
     <EditProduct :product="product" :onUpdate="fetchProduct" />
-
   </div>
   <div v-else>
     <p>Loading product details...</p>
@@ -32,6 +31,7 @@ import EditProduct from '../components/EditProduct.vue';
 import { useCart } from '../modules/useCart'; // Import the useCart composable
 
 // Initialize composables
+const emit = defineEmits(); // Define emits to use event emission
 const { products, fetchProducts } = useProducts();
 const { addToCart: addToCartMethod } = useCart(); // Destructure addToCart from useCart
 const route = useRoute();
@@ -56,7 +56,9 @@ onMounted(fetchProduct);
 // Add to cart function
 const addToCart = () => {
   if (product.value) {
-    addToCartMethod(product.value, quantity.value); // Call the method from useCart
+    console.log('Adding to cart:', product.value, 'Quantity:', quantity.value); // Debug log
+    addToCartMethod(product.value, quantity.value);
+  
   }
 };
 </script>

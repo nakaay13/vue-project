@@ -1,9 +1,7 @@
-
+import 'bootstrap'; // Import Bootstrap JavaScript
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import './assets/main.css'
-
-
+import './assets/main.css';
 import './assets/styles.scss'; // Import the custom SCSS file
 
 

@@ -7,7 +7,7 @@
     </div>
   </div>
   
-  <ProductList :products="products" />
+  <ProductList :products="products" @addToCart="handleAddToCart"/>
   <AddProductForm @product-added="fetchProducts" />
 </template>
 
@@ -16,10 +16,12 @@
 </style>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, defineEmits } from 'vue';
 import { useProducts } from '../modules/useProducts'; // Import the composable
 import ProductList from '../components/ProductList.vue';
 import AddProductForm from '../components/AddProductForm.vue';
+
+const emit = defineEmits(['addToCart']); // Declare the event that AboutView will emit
 
 const { products, fetchProducts } = useProducts(); // Destructure the products and fetch function
 
@@ -27,4 +29,9 @@ const { products, fetchProducts } = useProducts(); // Destructure the products a
 onMounted(() => {
   fetchProducts();
 });
+
+// Method to handle adding a product to the cart
+const handleAddToCart = (product, quantity) => {
+  emit('addToCart', product, quantity); // Emit the event to the parent
+};
 </script>

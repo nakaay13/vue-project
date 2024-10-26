@@ -16,7 +16,7 @@
                 type="number"
                 v-model="item.quantity"
                 min="1"
-                @change="updateCart({ productId: item.product.id, quantity: item.quantity })" 
+                @input="updateCart({ productId: item.product.id, quantity: item.quantity })" 
               />
             </div>
             <button @click="removeFromCart(item.product.id)">Remove</button>
