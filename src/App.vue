@@ -15,29 +15,14 @@
             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
           </svg>
         </li>
-        <div class="offcanvas offcanvas-end bg-danger" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+         <!-- Offcanvas for Login -->
+         <div class="offcanvas offcanvas-end bg-danger" tabindex="-1" id="offcanvasLogin" aria-labelledby="offcanvasLoginLabel">
           <div class="offcanvas-header">
-            <!-- <h5 class="offcanvas-title" id="offcanvasRightLabel"></h5> -->
-            <div class="col"></div>
+            <h3 class="offcanvas-title" id="offcanvasLoginLabel">Login</h3>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
-            <h3 class="text-center">LOGIN</h3>
-            <h6 class="text-center">Please enter your e-mail and password:</h6>
-            <form>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label fs-5">E-mail address</label>
-                <input type="email" class="form-control bg-primary" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text fs-6">We'll never share your email with anyone else.</div>
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label fs-5">Password</label>
-                <input type="password" class="form-control bg-primary" id="exampleInputPassword1">
-              </div>
-              <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary mt-3">Login</button>
-              </div>
-            </form>
+            <Login />
           </div>
         </div>
         <li class="mx-3"  type="button" @click="toggleCart">
@@ -70,9 +55,10 @@ import { Offcanvas } from 'bootstrap';
 import Footer from './components/Footer.vue';
 import Cart from './components/Cart.vue';
 import { useCart } from './modules/useCart'; // Import the useCart composable
+import Login from './components/Login.vue'; // Import the Login component
 
 export default {
-  components: { Footer, Cart },
+  components: { Footer, Cart, Login  },
   setup() {
     const { cartItems, showCart, addToCart, updateCart, removeFromCart } = useCart(); // Use the composable
 
