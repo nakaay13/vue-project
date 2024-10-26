@@ -1,47 +1,62 @@
-<!-- src/components/Login.vue -->
 <template>
     <div>
-      <h3 class="text-center">LOGIN</h3>
-      <h6 class="text-center">Please enter your e-mail and password:</h6>
-      <form @submit.prevent="handleLogin">
+      <h3 class="text-center">{{ user ? 'You are logged in as: ' + user.email : 'Login / Register' }}</h3>
+      <h6 v-if="error" class="text-danger text-center">{{ error }}</h6>
+      <form @submit.prevent="handleSubmit">
         <div class="mb-3">
-          <label for="email" class="form-label fs-5">E-mail address</label>
-          <input type="email" v-model="email" class="form-control bg-primary" id="email" required>
-          <div id="emailHelp" class="form-text fs-6">We'll never share your email with anyone else.</div>
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" v-model="email" required>
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label fs-5">Password</label>
-          <input type="password" v-model="password" class="form-control bg-primary" id="password" required>
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" v-model="password" required>
         </div>
         <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary mt-3">Login</button>
+          <button type="submit" class="btn btn-primary mt-3">{{ user ? 'Logout' : 'Login' }}</button>
         </div>
-        <div v-if="error" class="text-danger text-center">{{ error }}</div>
+        <div class="d-flex justify-content-center mt-2">
+          <button type="button" @click="toggleRegister" class="btn btn-link">{{ isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register' }}</button>
+        </div>
       </form>
-      <div class="text-center mt-3">
-        <button class="btn btn-secondary" @click="handleRegister">Register</button>
-      </div>
     </div>
   </template>
   
-  <script setup>
-  import { ref } from 'vue';
-  import useUsers from '../modules/useUsers';
+  <script>
+  import { ref, computed } from 'vue';
+  import { useUsers } from '../modules/useUsers';
   
-  const email = ref('');
-  const password = ref('');
-  const { login, register, error } = useUsers();
+  export default {
+    setup() {
+      const { user, error, registerUser, loginUser, logoutUser } = useUsers();
+      const email = ref('');
+      const password = ref('');
+      const isRegistering = ref(false);
   
-  const handleLogin = () => {
-    login(email.value, password.value);
-  };
+      const handleSubmit = () => {
+        if (isRegistering.value) {
+          registerUser(email.value, password.value);
+        } else {
+          loginUser(email.value, password.value);
+        }
+      };
   
-  const handleRegister = () => {
-    register(email.value, password.value);
+      const toggleRegister = () => {
+        isRegistering.value = !isRegistering.value;
+        email.value = ''; // Clear email on toggle
+        password.value = ''; // Clear password on toggle
+      };
+  
+      return {
+        user,
+        error,
+        email,
+        password,
+        isRegistering,
+        handleSubmit,
+        toggleRegister,
+        logoutUser,
+      };
+    },
   };
   </script>
-  
-  <style>
-  /* Add any specific styles for your login component here */
-  </style>
   
