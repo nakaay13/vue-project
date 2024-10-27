@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CardView from '../views/CardView.vue'
+import Login from '../views/Login.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,7 +24,11 @@ const router = createRouter({
       name: 'CardView',
       component: CardView,
       props: true,
-    }
+    },
+    { 
+      path: '/login', 
+      name: 'Login', 
+      component: Login },
     
   ]
 })

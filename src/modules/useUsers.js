@@ -1,53 +1,51 @@
+// src/composables/useUsers.js
 import { ref } from 'vue';
-import { auth, db  } from './firebase'; // Adjust this path to your Firebase setup
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore'; // Import doc and setDoc
+import { auth, db } from './firebase';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
 
-export const useUsers = () => {
+export function useUsers() {
   const user = ref(null);
-  const error = ref('');
+  const error = ref(null);
 
-  const registerUser = async (email, password) => {
+  const register = async (email, password) => {
     try {
+      // Register the user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       user.value = userCredential.user;
-      error.value = '';
+      error.value = null;
 
-      // Add new user to the Firestore 'users' collection
-      const userDocRef = doc(db, 'users', user.value.uid);
-      await setDoc(userDocRef, {
+      // Store additional user data in Firestore with a default role
+      await addDoc(collection(db, 'users'), {
+        uid: user.value.uid,
         email: user.value.email,
-        role: 'user',  // default role
-        createdAt: new Date(), // optional: timestamp for when the user registered
+        role: 'user' // Assign default role
       });
     } catch (err) {
-      console.error("Registration error:", err); // Log the error details
-      error.value = err.message; // Display error message to the user
+      error.value = err.message;
     }
   };
 
 
-const loginUser = async (email, password) => {
+  const login = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       user.value = userCredential.user;
-      error.value = '';
+      error.value = null;
     } catch (err) {
-      console.error("Login error:", err); // Log the error details
-      error.value = err.message; // Display error message to the user
+      error.value = err.message;
     }
   };
 
-  const logoutUser = async () => {
-    await signOut(auth);
-    user.value = null;
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      user.value = null;
+      error.value = null;
+    } catch (err) {
+      error.value = err.message;
+    }
   };
 
-  return {
-    user,
-    error,
-    registerUser,
-    loginUser,
-    logoutUser,
-  };
-};
+  return { user, error, register, login, logout };
+}
