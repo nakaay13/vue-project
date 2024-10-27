@@ -29,17 +29,18 @@ export const useProducts = () => {
   };
 
   // Function to add a new product
-  const addProduct = async () => {
-    if (!newProduct.value.name || !newProduct.value.price) return; // Ensure fields are filled
-    try {
-      const docRef = await addDoc(collection(db, 'products'), newProduct.value);
-      console.log("Product added with ID: ", docRef.id);
-      newProduct.value = { name: '', price: null, image: '', weight: null, description: '' }; // Reset form
-      await fetchProducts(); // Refresh the product list
-    } catch (error) {
-      console.error("Error adding product: ", error);
-    }
-  };
+const addProduct = async () => {
+  if (!newProduct.value.name || !newProduct.value.price) return; // Ensure fields are filled
+  try {
+    const docRef = await addDoc(collection(db, 'products'), newProduct.value);
+    console.log("Product added with ID: ", docRef.id);
+    alert('Product added successfully!'); // Show alert
+    newProduct.value = { name: '', price: null, image: '', weight: null, description: '' }; // Reset form
+    await fetchProducts(); // Refresh the product list
+  } catch (error) {
+    console.error("Error adding product: ", error);
+  }
+};
 
   // Function to update a product
   const updateProduct = async (productId, updatedData) => {

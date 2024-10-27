@@ -86,7 +86,8 @@ function toggleEditMode() {
 
 async function saveProduct() {
   try {
-    await updateProduct(editedProduct.value.id, editedProduct.value);
+    // Use the product ID from props directly for the update
+    await updateProduct(props.product.id, { ...editedProduct.value }); // Spread to create a new object
     isEditing.value = false;
     emit('update'); // Notify parent to refresh data
     alert('Product updated successfully!');

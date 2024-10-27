@@ -64,7 +64,7 @@ import Cart from './components/Cart.vue';
 import { useCart } from './modules/useCart'; // Import the useCart composable
 
 export default {
-  components: { Footer, Cart  },
+  components: { Footer, Cart },
   setup() {
     const { cartItems, showCart, addToCart, updateCart, removeFromCart } = useCart(); // Use the composable
 
@@ -79,8 +79,8 @@ export default {
     const handleAddToCart = (product, quantity) => {
       try {
         addToCart(product, quantity);
-        // showCart.value = true; // Removed this line
-        toggleBootstrapOffcanvas('offcanvasRight1'); // Use this for opening the cart
+        showCart.value = true; // Show cart after adding the product
+        toggleBootstrapOffcanvas('offcanvasRight1'); // Open the cart offcanvas
       } catch (error) {
         console.error("Error adding to cart:", error);
       }
