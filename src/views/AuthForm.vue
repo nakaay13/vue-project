@@ -14,7 +14,7 @@
   </template>
   
   <script>
-  import { ref, onUnmounted } from 'vue';
+  import { ref } from 'vue';
   import LoginForm from '../components/LoginForm.vue';
   import RegisterForm from '../components/RegisterForm.vue';
   import { useUsers } from '../modules/useUsers';

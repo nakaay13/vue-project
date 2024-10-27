@@ -1,12 +1,12 @@
-// src/composables/useUsers.js
-import { ref } from 'vue';
-import { auth, db } from './firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
+import { ref, onMounted } from 'vue';
+import { auth, db } from './firebase'; // Adjust the path if necessary
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 
-export function useUsers() {
+const useUsers = () => {
   const user = ref(null);
   const error = ref(null);
+  const userRole = ref(null); // To store the user's role
 
   const getErrorMessage = (errorCode) => {
     switch (errorCode) {
@@ -30,10 +30,12 @@ export function useUsers() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       user.value = userCredential.user;
       error.value = null;
-      await addDoc(collection(db, 'users'), {
+
+      // Add user to Firestore with default role
+      await setDoc(doc(db, 'users', user.value.uid), {
         uid: user.value.uid,
         email: user.value.email,
-        role: 'user'
+        role: 'user' // Default role for new users
       });
     } catch (err) {
       error.value = getErrorMessage(err.code);
@@ -45,6 +47,9 @@ export function useUsers() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       user.value = userCredential.user;
       error.value = null;
+
+      // Fetch user role from Firestore after login
+      await fetchUserRole(user.value.uid);
     } catch (err) {
       error.value = getErrorMessage(err.code);
     }
@@ -54,11 +59,40 @@ export function useUsers() {
     try {
       await signOut(auth);
       user.value = null;
+      userRole.value = null; // Reset role when logging out
       error.value = null;
     } catch (err) {
       error.value = getErrorMessage(err.code);
     }
   };
 
-  return { user, error, register, login, logout };
-}
+  // Function to fetch user role from Firestore
+  const fetchUserRole = async (userId) => {
+    const userDoc = doc(db, 'users', userId); // Access the user document in Firestore
+    const userSnapshot = await getDoc(userDoc);
+
+    if (userSnapshot.exists()) {
+      userRole.value = userSnapshot.data().role; // Get the role from the Firestore document
+      console.log(`Fetched role for user ${userId}: ${userRole.value}`); // Add this line
+    
+    } else {
+      console.error('No such document!');
+    }
+  };
+
+  // Listen to Firebase auth state changes
+  onMounted(() => {
+    onAuthStateChanged(auth, async (currentUser) => {
+      user.value = currentUser;
+      if (currentUser) {
+        await fetchUserRole(currentUser.uid); // Fetch the role after user logs in
+      } else {
+        userRole.value = null; // Reset role if user is logged out
+      }
+    });
+  });
+
+  return { user, userRole, error, register, login, logout }; // Return necessary refs and functions
+};
+
+export { useUsers };

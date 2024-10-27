@@ -8,7 +8,7 @@
   </div>
   
   <ProductList :products="products" @addToCart="handleAddToCart"/>
-  <AddProductForm @product-added="fetchProducts" />
+  <AddProductForm v-if="userRole  === 'admin'" @product-added="fetchProducts" />
 </template>
 
 <style scoped>
@@ -20,11 +20,13 @@ import { onMounted, defineEmits } from 'vue';
 import { useProducts } from '../modules/useProducts'; // Import the composable
 import ProductList from '../components/ProductList.vue';
 import AddProductForm from '../components/AddProductForm.vue';
+import { useUsers } from '../modules/useUsers'; // Import useUsers to access user role
+
 
 const emit = defineEmits(['addToCart']); // Declare the event that AboutView will emit
 
 const { products, fetchProducts } = useProducts(); // Destructure the products and fetch function
-
+const { userRole } = useUsers(); // Get user role
 // Fetch products when the component is mounted
 onMounted(() => {
   fetchProducts();

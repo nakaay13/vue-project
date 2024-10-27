@@ -16,7 +16,7 @@
       </div>
     </div>
     
-    <EditProduct :product="product" :onUpdate="fetchProduct" />
+    <EditProduct  v-if="userRole  === 'admin'" :product="product" :onUpdate="fetchProduct" />
   </div>
   <div v-else>
     <p>Loading product details...</p>
@@ -29,6 +29,7 @@ import { useRoute } from 'vue-router';
 import { useProducts } from '../modules/useProducts'; // Import your composable
 import EditProduct from '../components/EditProduct.vue';
 import { useCart } from '../modules/useCart'; // Import the useCart composable
+import { useUsers } from '../modules/useUsers'; // Import useUsers to access user role
 
 // Initialize composables
 const emit = defineEmits(); // Define emits to use event emission
@@ -37,7 +38,7 @@ const { addToCart: addToCartMethod } = useCart(); // Destructure addToCart from 
 const route = useRoute();
 const quantity = ref(1);
 const product = ref(null);
-
+const { userRole } = useUsers(); // Get user role
 // Fetch product on mount
 const fetchProduct = async () => {
   await fetchProducts(); // Ensure products are fetched
