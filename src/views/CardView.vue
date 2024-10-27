@@ -58,7 +58,7 @@ onMounted(fetchProduct);
 const addToCart = () => {
   if (product.value) {
     console.log('Adding to cart:', product.value, 'Quantity:', quantity.value); // Debug log
-    addToCartMethod(product.value, quantity.value);
+    emit('add-to-cart', product.value, quantity.value); // Emit product and quantity
   
   }
 };
