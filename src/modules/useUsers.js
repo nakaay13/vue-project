@@ -8,24 +8,37 @@ export function useUsers() {
   const user = ref(null);
   const error = ref(null);
 
-  const register = async (email, password) => {
-    try {
-      // Register the user in Firebase Authentication
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      user.value = userCredential.user;
-      error.value = null;
-
-      // Store additional user data in Firestore with a default role
-      await addDoc(collection(db, 'users'), {
-        uid: user.value.uid,
-        email: user.value.email,
-        role: 'user' // Assign default role
-      });
-    } catch (err) {
-      error.value = err.message;
+  const getErrorMessage = (errorCode) => {
+    switch (errorCode) {
+      case 'auth/invalid-email':
+        return 'Invalid email format.';
+      case 'auth/user-not-found':
+        return 'No account found with this email.';
+      case 'auth/wrong-password':
+        return 'Incorrect password.';
+      case 'auth/email-already-in-use':
+        return 'Email is already registered.';
+      case 'auth/weak-password':
+        return 'Password is too weak.';
+      default:
+        return 'An unknown error occurred.';
     }
   };
 
+  const register = async (email, password) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      user.value = userCredential.user;
+      error.value = null;
+      await addDoc(collection(db, 'users'), {
+        uid: user.value.uid,
+        email: user.value.email,
+        role: 'user'
+      });
+    } catch (err) {
+      error.value = getErrorMessage(err.code);
+    }
+  };
 
   const login = async (email, password) => {
     try {
@@ -33,7 +46,7 @@ export function useUsers() {
       user.value = userCredential.user;
       error.value = null;
     } catch (err) {
-      error.value = err.message;
+      error.value = getErrorMessage(err.code);
     }
   };
 
@@ -43,7 +56,7 @@ export function useUsers() {
       user.value = null;
       error.value = null;
     } catch (err) {
-      error.value = err.message;
+      error.value = getErrorMessage(err.code);
     }
   };
 

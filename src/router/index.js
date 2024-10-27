@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CardView from '../views/CardView.vue'
-import Login from '../views/Login.vue';
+import AuthForm from '../views/AuthForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,10 +25,11 @@ const router = createRouter({
       component: CardView,
       props: true,
     },
-    { 
-      path: '/login', 
-      name: 'Login', 
-      component: Login },
+    {
+      path: '/auth',
+      name: 'AuthForm',
+      component: AuthForm
+    },
     
   ]
 })
