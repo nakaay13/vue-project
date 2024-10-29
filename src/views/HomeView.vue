@@ -65,3 +65,52 @@
 
   
 </template>
+
+
+<style scoped>
+@media (width <= 1152px){
+    .info-container{
+        height: 1300px;
+        justify-content: start;
+    }
+    .info-items{
+        display: flex;
+        flex-direction: column;
+        height: 900px;
+        
+    }
+    .info-item{
+        margin: 15px 0px 15px 0 !important;
+        width: 100%;
+        height: 350px;
+    }
+
+}
+
+@media (width <= 790px) {
+    .info-item{
+        height: 450px;
+    }
+    .info-container{
+        height: 1500px;
+    }
+    .about{
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .about-text{
+        margin: 0;
+    }
+}
+
+@media (width <= 592px) {
+    .info-container{
+        height: 2000px;
+    }
+    .info-item{
+        height: 600px;
+    }
+}
+</style>

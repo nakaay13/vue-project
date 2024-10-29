@@ -21,7 +21,48 @@
   .router-link {
     text-decoration: none;
   }
+  
+  .products-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+  
+  .products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+    width: 80%;
+    max-width: 1200px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1200px) {
+    .products {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .products {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .products {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 17rem;
+  }
   </style>
+  
+
   
   <script setup>
   import { defineProps } from 'vue';
