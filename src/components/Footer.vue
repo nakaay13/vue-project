@@ -12,7 +12,7 @@
         <p>VISIT OUR SOCIAL MEDIA</p>
         <p>Facebook <br>
             Instagram <br>
-            Twitter (aka "X") <br>
+            Twitter<br>
             Our blog <br>
             Tik tok</p>
         </div>
