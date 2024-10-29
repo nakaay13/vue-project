@@ -1,24 +1,24 @@
 <template>
-    <div v-if="product">
-      <div class="edit">
-        <button @click="deleteProduct">Delete</button>
-        <button @click="isEditing ? saveProduct() : toggleEditMode()">
-          {{ isEditing ? 'Save' : 'Edit' }}
-        </button>
-      </div>
-      <div v-if="isEditing" class="edit-mode">
-        <h3>Edit Product Details:</h3>
-        <input v-model="product.name" placeholder="Product Name" />
-        <input v-model.number="product.weight" placeholder="Weight (g)" />
-        <textarea v-model="product.description" placeholder="Description"></textarea>
-        <input v-model.number="product.price" placeholder="Price (DKK)" />
-        <input v-model="product.image" placeholder="Image URL" />
-      </div>
+  <div v-if="product">
+    <div class="edit">
+      <button @click="deleteProduct">Delete</button>
+      <button @click="isEditing ? saveProduct() : toggleEditMode()">
+        {{ isEditing ? 'Save' : 'Edit' }}
+      </button>
     </div>
-    <div v-else>
-      <p>Loading product details...</p>
+    <div v-if="isEditing" class="edit-mode">
+      <h3>Edit Product Details:</h3>
+      <input v-model="editedProduct.name" placeholder="Product Name" />
+      <input v-model.number="editedProduct.weight" placeholder="Weight (g)" />
+      <textarea v-model="editedProduct.description" placeholder="Description"></textarea>
+      <input v-model.number="editedProduct.price" placeholder="Price (DKK)" />
+      <input v-model="editedProduct.image" placeholder="Image URL" />
     </div>
-  </template>
+  </div>
+  <div v-else>
+    <p>Loading product details...</p>
+  </div>
+</template>
   
   <style scoped>
   .edit {
@@ -64,18 +64,16 @@
   <script setup>
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts } from '../modules/useProducts'; // Import the useProducts composable
+import { useProducts } from '../modules/useProducts';
 
-// Accept props and emit events
 const props = defineProps(['product']);
 const emit = defineEmits(['update']);
 const router = useRouter();
-const { updateProduct, deleteProduct: deleteProductFromDB } = useProducts(); // Destructure the functions from useProducts
+const { updateProduct, deleteProduct: deleteProductFromDB } = useProducts();
 
 const isEditing = ref(false);
 const editedProduct = ref({ ...props.product });
 
-// Watch for changes in `product` prop and update `editedProduct`
 watch(() => props.product, (newProduct) => {
   editedProduct.value = { ...newProduct };
 });
@@ -86,10 +84,9 @@ function toggleEditMode() {
 
 async function saveProduct() {
   try {
-    // Use the product ID from props directly for the update
-    await updateProduct(props.product.id, { ...editedProduct.value }); // Spread to create a new object
+    await updateProduct(props.product.id, { ...editedProduct.value });
     isEditing.value = false;
-    emit('update'); // Notify parent to refresh data
+    emit('update');
     alert('Product updated successfully!');
   } catch (error) {
     console.error('Error saving product:', error);
@@ -98,9 +95,9 @@ async function saveProduct() {
 
 async function deleteProduct() {
   try {
-    await deleteProductFromDB(editedProduct.value.id); // Call the delete function from useProducts
+    await deleteProductFromDB(editedProduct.value.id);
     alert('Product deleted successfully!');
-    router.push('/about'); // Redirect after deletion
+    router.push('/about');
   } catch (error) {
     console.error('Error deleting product:', error);
   }
