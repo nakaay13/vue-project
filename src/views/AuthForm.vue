@@ -46,4 +46,14 @@
   align-items: center;
   height: 100vh;
 }
+button {
+  background-color: #306614;
+  color: #fff;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 30px;
+}
 </style>
