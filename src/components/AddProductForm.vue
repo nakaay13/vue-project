@@ -2,9 +2,10 @@
 <template>
     <div class="form">
       <h1>Add Product</h1>
-      <form @submit.prevent="addProduct">
+      <form @submit.prevent="handleAddProduct">
         <input v-model="newProduct.name" placeholder="Name" />
         <input v-model="newProduct.price" placeholder="Price" type="number" />
+        <input v-model="newProduct.description" placeholder="Description" />
         <input v-model="newProduct.image" placeholder="Image URL" />
         <input v-model="newProduct.weight" placeholder="Weight" type="number" />
         <button type="submit">Add Product</button>
@@ -46,8 +47,15 @@
   </style>
   
   <script setup>
-    import { useProducts } from '../modules/useProducts';
-    // Use the composable to access products functionality
-    const { addProduct, newProduct } = useProducts();
-  </script>
+import { useProducts } from '../modules/useProducts';
+const { addProduct, newProduct } = useProducts();
+
+// Emit the event after adding a product
+const emit = defineEmits(['productAdded']);
+
+const handleAddProduct = async () => {
+  await addProduct();
+  emit('productAdded'); // Emit the event to notify the parent component
+};
+</script>
   

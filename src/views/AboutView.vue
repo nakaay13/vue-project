@@ -8,7 +8,7 @@
   </div>
   
   <ProductList :products="products" @addToCart="handleAddToCart"/>
-  <AddProductForm v-if="userRole  === 'admin'" @product-added="fetchProducts" />
+  <AddProductForm v-if="userRole  === 'admin'" @product-added="refreshProducts" />
 </template>
 
 <style scoped>
@@ -17,23 +17,25 @@
 
 <script setup>
 import { onMounted, defineEmits } from 'vue';
-import { useProducts } from '../modules/useProducts'; // Import the composable
+import { useProducts } from '../modules/useProducts';
 import ProductList from '../components/ProductList.vue';
 import AddProductForm from '../components/AddProductForm.vue';
-import { useUsers } from '../modules/useUsers'; // Import useUsers to access user role
+import { useUsers } from '../modules/useUsers';
 
+const emit = defineEmits(['addToCart']);
+const { products, fetchProducts } = useProducts();
+const { userRole } = useUsers();
 
-const emit = defineEmits(['addToCart']); // Declare the event that AboutView will emit
-
-const { products, fetchProducts } = useProducts(); // Destructure the products and fetch function
-const { userRole } = useUsers(); // Get user role
 // Fetch products when the component is mounted
-onMounted(() => {
+onMounted(fetchProducts);
+
+// Handle refreshing products after a new product is added
+function refreshProducts() {
   fetchProducts();
-});
+}
 
 // Method to handle adding a product to the cart
 const handleAddToCart = (product, quantity) => {
-  emit('addToCart', product, quantity); // Emit the event to the parent
+  emit('addToCart', product, quantity);
 };
 </script>
