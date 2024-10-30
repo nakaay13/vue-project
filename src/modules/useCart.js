@@ -22,8 +22,15 @@ export const useCart = () => {
     }
   };
 
-  const removeFromCart = (productId) => {
+  /* const removeFromCart = (productId) => {
+    console.log('Removing product with ID:', productId);
     cartItems.value = cartItems.value.filter(item => item.product.id !== productId);
+  }; */
+  const removeFromCart = (productId) => {
+    const index = cartItems.value.findIndex(item => item.product.id === productId); // Find the index of the item with the specified product ID
+    if (index !== -1) {
+      cartItems.value.splice(index, 1); // Use splice to maintain reactivity, splice modifies the original array and removes the item at the specified index
+    }
   };
 
   return {

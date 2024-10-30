@@ -16,10 +16,10 @@
                 type="number"
                 v-model="item.quantity"
                 min="1"
-                @input="updateCart({ productId: item.product.id, quantity: item.quantity })" 
+                 @input="$emit('update-cart', { productId: item.product.id, quantity: item.quantity })"
               />
             </div>
-            <button @click="removeFromCart(item.product.id)">Remove</button>
+            <button @click="$emit('remove-from-cart', item.product.id)">Remove</button>
           </div>
         </li>
       </ul>
