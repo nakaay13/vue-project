@@ -127,6 +127,27 @@ input {
   margin: 5px 0;
   width: 80%; /* Adjust as necessary */
 }
+
+@media (max-width: 900px) {
+  .product-container {
+    flex-direction: column;
+  }
+  .product-container img {
+    width: 100%;
+    height: auto;
+  }
+  .description-container {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  button {
+    width: 100%;
+    margin: 0;
+  }
+  input {
+    width: 100%;
+  }
+}
 </style>
 
 
